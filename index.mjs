@@ -19,7 +19,13 @@ app.get('*', (req, res) => {
         console.log(modeMedia + req.url)
         request(options, function(error, response) {
             if (error) throw new Error(error);
-            console.log(response.body);
+            // console.log(response.body);
+            const headers = response && response.headers ? response.headers : {};
+            const headersKeys = Object.keys(headers)
+            for(var i = 0; i < headersKeys.length; i++) {
+                res.setHeader(headersKeys[i], headers[headersKeys[i]]);
+            }
+            // console.log('Headers:', headers);
             res.send(response.body);
         });
     }
